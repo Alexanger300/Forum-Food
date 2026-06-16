@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookime — Connexion</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="login-page">
  
@@ -13,12 +13,12 @@
 ════════════════════════════════════════════ -->
 <header>
   <div class="header-inner">
-    <a href="index.html" class="site-logo">
+    <a href="../index.html" class="site-logo">
       <span class="jp-title">Cookime</span>
       <span class="fr-subtitle">Cookime — Forum de recettes et d'échanges</span>  
     </a>
     <div class="header-stamp">
-      <img src="logo.jpg" alt="Logo Cookime" class="header-logo">
+      <img src="/assets/img/logo.jpg" alt="Logo Cookime" class="header-logo">
     </div>
   </div>
 </header>
@@ -28,7 +28,7 @@
 ════════════════════════════════════════════ -->
 <nav>
   <ul>
-    <li><a href="index.html">Accueil</a></li>
+    <li><a href="../index.html">Accueil</a></li>
     <li><a href="posts.html">Posts</a></li>
     <li><a href="account.html">Mon compte</a></li>
   </ul>
@@ -133,7 +133,6 @@
           <span class="checkbox-custom"></span>
           Se souvenir de moi
         </label>
-        <a href="/forgot-password" class="forgot-link">Mot de passe oublié ?</a>
       </div>
  
       <!-- Bouton soumettre -->
@@ -155,7 +154,7 @@
     <!-- Lien inscription -->
     <p class="register-link">
       Pas encore de compte ?
-      <a href="/register.html">Créer un compte</a>
+      <a href="register.html">Créer un compte</a>
     </p>
  
     <!-- Retour au forum -->
@@ -174,8 +173,8 @@
 </footer>
  
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
-<script src="db.js"></script>
-<script src="script.js"></script>
+<script src="../js/db.js"></script>
+<script type="module" src="../js/main.js"></script>
  
 </body>
 </html>

@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookime — Déconnexion</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<div class="page-wrap" style="padding:40px; text-align:center;">
-  <h2>Déconnexion en cours…</h2>
-  <p id="msg">Nous vous redirigeons vers la page de connexion.</p>
-  <p><a href="login.html">Retour manuel à la page de connexion</a></p>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
-<script src="db.js"></script>
-<script>
-  (async function () {
+(async function () {
     const msgEl = document.getElementById('msg');
 
     // Clear local app session
@@ -47,7 +28,3 @@
       window.location.href = 'login.html';
     }, 800);
   })();
-</script>
-
-</body>
-</html>
