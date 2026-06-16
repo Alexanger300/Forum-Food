@@ -58,7 +58,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       statusBox.style.display = 'block';
     }
 
-    function createPostCard(post) {
+    async function createPostCard(post) {
+      const stored = localStorage.getItem('cookimeUser');
+      let userObj = null;
+      try { userObj = stored ? JSON.parse(stored) : null; } catch (e) {}
+
       const card = document.createElement('article');
       card.className = 'post-card';
 
@@ -89,24 +93,194 @@ document.addEventListener('DOMContentLoaded', async function () {
         card.appendChild(image);
       }
 
+      // ============================================================
+      // ❤️💔 SYSTÈME LIKE / DISLIKE
+      // ============================================================
+
+      const likeBar = document.createElement('div');
+      likeBar.className = 'post-like-bar';
+
+      const likeBtn = document.createElement('button');
+      likeBtn.className = 'like-btn';
+      likeBtn.dataset.postId = post.id;
+
+      const dislikeBtn = document.createElement('button');
+      dislikeBtn.className = 'dislike-btn';
+      dislikeBtn.dataset.postId = post.id;
+
+      let likesCount = 0;
+      let dislikesCount = 0;
+      let userVote = null;
+
+      // Charger les votes existants
+      if (window.getLikes) {
+        const { data } = await window.getLikes(post.id);
+        if (data) {
+          likesCount = data.filter(v => v.type === 'like').length;
+          dislikesCount = data.filter(v => v.type === 'dislike').length;
+
+          if (userObj) {
+            const myVote = data.find(v => v.user_id === userObj.id);
+            if (myVote) userVote = myVote.type;
+          }
+        }
+      }
+
+      // Affichage des boutons
+      function renderButtons() {
+        likeBtn.innerHTML = `❤️ <span>${likesCount}</span>`;
+        dislikeBtn.innerHTML = `💔 <span>${dislikesCount}</span>`;
+        likeBtn.classList.toggle('active', userVote === 'like');
+        dislikeBtn.classList.toggle('active', userVote === 'dislike');
+      }
+
+      renderButtons();
+
+      // Gestion du vote
+      async function handleVote(type) {
+        if (!userObj) {
+          showStatus('Connectez-vous pour voter.', 'error');
+          return;
+        }
+
+        const prevVote = userVote;
+
+        // Optimistic UI
+        if (prevVote === type) {
+          userVote = null;
+          if (type === 'like') likesCount--;
+          else dislikesCount--;
+        } else {
+          if (prevVote === 'like') likesCount--;
+          if (prevVote === 'dislike') dislikesCount--;
+          userVote = type;
+          if (type === 'like') likesCount++;
+          else dislikesCount++;
+        }
+
+        renderButtons();
+
+        // Mise à jour Supabase
+        if (window.toggleLike) {
+          const { error } = await window.toggleLike(post.id, userObj.id, type);
+          if (error) {
+            // rollback
+            userVote = prevVote;
+            const { data } = await window.getLikes(post.id);
+            if (data) {
+              likesCount = data.filter(v => v.type === 'like').length;
+              dislikesCount = data.filter(v => v.type === 'dislike').length;
+            }
+            renderButtons();
+            showStatus('Erreur lors du vote.', 'error');
+          }
+        }
+      }
+
+      likeBtn.addEventListener('click', () => handleVote('like'));
+      dislikeBtn.addEventListener('click', () => handleVote('dislike'));
+
+      likeBar.appendChild(likeBtn);
+      likeBar.appendChild(dislikeBtn);
+      card.appendChild(likeBar);
+
+      // -------------------------------------------------------
+      // Section commentaires (toggle)
+      // -------------------------------------------------------
+      const commentToggle = document.createElement('button');
+      commentToggle.className = 'comment-toggle-btn';
+      commentToggle.innerHTML = `💬 <span class="comment-toggle-label">Commentaires</span>`;
+
+      const commentSection = document.createElement('div');
+      commentSection.className = 'comment-section';
+      commentSection.style.display = 'none';
+
+      // Liste des commentaires
+      const commentsList = document.createElement('div');
+      commentsList.className = 'comments-list';
+
+      // Formulaire
+      const commentForm = document.createElement('form');
+      commentForm.className = 'comment-form';
+      commentForm.innerHTML = `
+        <textarea class="comment-input" placeholder="Laisser un commentaire..." rows="2" required></textarea>
+        <button type="submit" class="comment-submit">Envoyer</button>
+      `;
+
+      commentSection.appendChild(commentsList);
+      commentSection.appendChild(commentForm);
+
+      // Charger et afficher les commentaires
+      async function loadComments() {
+        if (!window.db?.getComments) return;
+        const comments = await window.db.getComments(post.id);
+        commentsList.innerHTML = '';
+
+        if (!comments || comments.length === 0) {
+          commentsList.innerHTML = '<p class="no-comments">Aucun commentaire.</p>';
+          return;
+        }
+
+        comments.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'comment-item';
+          div.innerHTML = `
+            <strong>${c.author || 'Anonyme'}</strong>
+            <span class="comment-date">${new Date(c.date || c.created_at).toLocaleString('fr-FR')}</span>
+            <p>${c.content}</p>
+          `;
+          commentsList.appendChild(div);
+        });
+      }
+
+      // Toggle ouverture/fermeture
+      commentToggle.addEventListener('click', async () => {
+        const isOpen = commentSection.style.display !== 'none';
+        commentSection.style.display = isOpen ? 'none' : 'block';
+        if (!isOpen) await loadComments();
+      });
+
+      // Soumission commentaire
+      commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const textarea = commentForm.querySelector('.comment-input');
+        const text = textarea.value.trim();
+        if (!text) return;
+
+        if (!userObj) {
+          showStatus('Connectez-vous pour commenter.', 'error');
+          return;
+        }
+
+        if (window.db?.createComment) {
+          await window.db.createComment(post.id, text);
+          textarea.value = '';
+          await loadComments();
+        }
+      });
+
+      card.appendChild(commentToggle);
+      card.appendChild(commentSection);
+
       return card;
     }
 
-    function renderPosts(posts) {
+    async function renderPosts(posts) {
       if (!feed) return;
       feed.innerHTML = '';
       if (!posts || posts.length === 0) {
         feed.innerHTML = '<div class="empty-feed">Aucune publication pour le moment.</div>';
         return;
       }
-      posts.forEach((post) => feed.appendChild(createPostCard(post)));
+      const cards = await Promise.all(posts.map(post => createPostCard(post)));
+      cards.forEach(card => feed.appendChild(card));
     }
 
     async function loadPosts() {
       if (!window.getPosts) return;
       const { data, error } = await window.getPosts();
       if (error) { showStatus('Impossible de charger les publications.', 'error'); return; }
-      renderPosts(data || []);
+      await renderPosts(data || []);
     }
 
     await loadPosts();
