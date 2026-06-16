@@ -285,6 +285,33 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     await loadPosts();
 
+
+    // ============================================================
+    // FILTRES CATÉGORIES
+    // ============================================================
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    if (filterBtns.length > 0) {
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const activeCategory = btn.dataset.category;
+          if (!window.getPosts) return;
+          const { data, error } = await window.getPosts();
+          if (error) {
+            showStatus('Impossible de charger les publications.', 'error');
+            return;
+          }
+          const filtered = activeCategory === 'all'
+            ? data || []
+            : (data || []).filter(p =>
+                (p.category || '').toLowerCase() === activeCategory.toLowerCase()
+              );
+          await renderPosts(filtered);
+        });
+      });
+    }
+
     postForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 

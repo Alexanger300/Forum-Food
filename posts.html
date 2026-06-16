@@ -5,6 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookime — Posts</title>
   <link rel="stylesheet" href="style.css">
+<style>
+  .filter-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    justify-content: center;
+  }
+  .filter-btn {
+    padding: 8px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    background: #fff;
+    color: #555;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+  .filter-btn:hover {
+    border-color: #f97316;
+    color: #f97316;
+  }
+  .filter-btn.active {
+    background: #f97316;
+    border-color: #f97316;
+    color: #fff;
+    font-weight: 600;
+  }
+</style>
 </head>
 <body>
  
@@ -82,6 +113,15 @@
         <span class="icon">📝</span>
         <h3>Fil de discussion</h3>
       </div>
+      
+  <!-- FILTRES CATÉGORIES -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-category="all">🍽️ Tous</button>
+    <button class="filter-btn" data-category="entrée">🥗 Entrées</button>
+    <button class="filter-btn" data-category="plat">🍲 Plats</button>
+    <button class="filter-btn" data-category="dessert">🍰 Desserts</button>
+  </div>
+
       <div id="posts-feed" class="post-list">
         <div class="empty-feed">Aucune publication pour le moment. Écrivez un message pour le voir apparaître ici.</div>
       </div>
@@ -99,6 +139,7 @@
 <script src="db.js"></script>
 <script src="script.js"></script>
 <script src="post-actions.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
  
