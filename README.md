@@ -54,7 +54,54 @@ PROJET-FORUM
     │
     ├── src
     │   ├── css
+<<<<<<< HEAD
     │   │   └── style.css
+=======
+    │   │   ├── variables.css
+    │   │   ├── style.css
+    │   │   ├── responsive.css
+    │   │   │
+    │   │   ├── header-inner.css
+    │   │   ├── site-logo.css
+    │   │   ├── nav.css
+    │   │   │
+    │   │   ├── home.css
+    │   │   ├── board-title.css
+    │   │   ├── forum-category.css
+    │   │   ├── topic-row.css
+    │   │   ├── hero-post-banner.css
+    │   │   ├── hero-post-footer.css
+    │   │   ├── widget-body.css
+    │   │   │
+    │   │   ├── post-card-body.css
+    │   │   ├── post-actions.css
+    │   │   ├── my-posts.css
+    │   │   ├── my-post-card-content.css
+    │   │   │
+    │   │   ├── comment-section.css
+    │   │   ├── comment-item.css
+    │   │   ├── comment-inputs.css
+    │   │   ├── comment-input-focus.css
+    │   │   │
+    │   │   ├── btn-login.css
+    │   │   ├── btn-edit-comment.css
+    │   │   ├── delete-post.css
+    │   │   ├── edit-post-btn.css
+    │   │   ├── dislike-btn.css
+    │   │   ├── heart-icon.css
+    │   │   │
+    │   │   ├── login-card.css
+    │   │   ├── login-card-top.css
+    │   │   ├── login-deco.css
+    │   │   ├── login-alert.css
+    │   │   ├── checkbox-label.css
+    │   │   ├── field-wrap.css
+    │   │   ├── field-toggle.css
+    │   │   │
+    │   │   ├── pagination.css
+    │   │   ├── member-chip.css
+    │   │   ├── sep-text.css
+>>>>>>> 1b0783767f32b91cb84ddb720b115e12ccdfb60a
     │   │
     │   ├── html
     │   │   ├── account.html
@@ -77,6 +124,10 @@ PROJET-FORUM
     └── server.go
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1b0783767f32b91cb84ddb720b115e12ccdfb60a
 Fonctions clés 
 
 - La fonction createPost() — enregistrer une nouvelle publication dans la base de données.
@@ -105,7 +156,11 @@ L’utilisation de Supabase simplifie l’authentification et la persistance des
 Qualité & fonctionnalités principales
 Le site propose plusieurs fonctionnalités permettant une expérience fluide :
 
+<<<<<<< HEAD
 📝 Publications de posts
+=======
+    Publications de posts
+>>>>>>> 1b0783767f32b91cb84ddb720b115e12ccdfb60a
 Les utilisateurs peuvent créer des posts contenant :
 
 un titre
@@ -128,7 +183,11 @@ chargement dynamique des commentaires
 ajout de nouveaux commentaires
 affichage de l’auteur et de la date
 
+<<<<<<< HEAD
 👍 Likes
+=======
+     Likes
+>>>>>>> 1b0783767f32b91cb84ddb720b115e12ccdfb60a
 Les utilisateurs peuvent liker un post.
 Le système fonctionne comme un interrupteur :
 like si l’utilisateur n’a pas encore liké
@@ -154,4 +213,8 @@ Pas de système de notifications (likes, réponses, etc.)
 
 👥 Crédits & licence
 Développé par :
+<<<<<<< HEAD
 Humbert Chloé , Chochon Elsa , Fatoux-Della Posta Alexandre
+=======
+Humbert Chloé , Chochon Elsa , Fatoux-Della Posta Alexandre
+>>>>>>> 1b0783767f32b91cb84ddb720b115e12ccdfb60a
