@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       // -------------------------------------------------------
       const commentToggle = document.createElement('button');
       commentToggle.className = 'comment-toggle-btn';
-      commentToggle.innerHTML = `💬 <span class="comment-toggle-label">Commentaires</span>`;
+      commentToggle.innerHTML = `<span class="comment-toggle-label">Commentaires</span>`;
 
       const commentSection = document.createElement('div');
       commentSection.className = 'comment-section';
@@ -236,13 +236,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             <p class="comment-content">${c.content}</p>
             ${isOwner ? `
               <div class="comment-actions">
-                <button class="btn-edit-comment" data-id="${c.id}">✏️ Modifier</button>
-                <button class="btn-delete-comment" data-id="${c.id}">🗑️ Supprimer</button>
+                <button class="btn-edit-comment" data-id="${c.id}">Modifier</button>
+                <button class="btn-delete-comment" data-id="${c.id}">Supprimer</button>
               </div>
               <div class="comment-edit-form" id="comment-edit-${c.id}" style="display:none;">
                 <textarea class="comment-edit-input" rows="2">${c.content}</textarea>
                 <div class="comment-edit-actions">
-                  <button class="btn-save-comment" data-id="${c.id}">💾 Enregistrer</button>
+                  <button class="btn-save-comment" data-id="${c.id}">Enregistrer</button>
                   <button class="btn-cancel-comment" data-id="${c.id}">✖ Annuler</button>
                 </div>
               </div>
@@ -724,8 +724,8 @@ if (accountCard) {
           <div class="my-post-card-content">${post.content || ''}</div>
         </div>
         <div class="my-post-card-actions">
-          <button class="btn-edit-post"   data-id="${post.id}">✏️ Modifier</button>
-          <button class="btn-delete-post" data-id="${post.id}">🗑️ Supprimer</button>
+          <button class="btn-edit-post"   data-id="${post.id}">Modifier</button>
+          <button class="btn-delete-post" data-id="${post.id}">Supprimer</button>
         </div>
 
         <div class="edit-post-form" id="edit-form-${post.id}" style="display:none;">
