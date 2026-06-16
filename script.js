@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const image = document.createElement('img');
         image.src = post.image_url;
         image.alt = post.title || 'Image du post';
-        image.style.cssText = 'max-width:100%;border-radius:10px;margin-top:12px;';
+        image.style.cssText = 'max-width:20%;border-radius:10px;margin-top:12px;';
         card.appendChild(image);
       }
 
